@@ -40,7 +40,7 @@ const FeaturedProducts: React.FC = () => {
                 name: product.title,
                 price: product.price,
                 discount: Math.floor(Math.random() * 30), // Random discount between 0-30%
-                image: images[0] || '/api/placeholder/300/300'
+                image: images[0] || 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'
             };
         });
     }, [products]);

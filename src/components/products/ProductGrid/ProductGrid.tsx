@@ -27,19 +27,17 @@ const ProductGrid: React.FC = () => {
     }, [dispatch]);
 
     // Parse images from stringified JSON
-    const parseImages = (imagesStr: string | string[] | null | undefined): string[] => {
-        if (!imagesStr) return [];
-
-        if (Array.isArray(imagesStr)) {
-            return imagesStr; // Already an array, return as is
-        }
-
+    const parseImages = (imagesStr: any): any[] => {
         try {
-            return (JSON.parse(imagesStr) as string[]).map((img) => img.replace(/^"|"$/g, ''));
+            const parsed = JSON.parse(imagesStr);
+            return Array.isArray(parsed) && parsed.length > 0
+                ? parsed.map((img: any) => img.replace(/^"|"$/g, ''))
+                : [""];
         } catch {
-            return [];
+            return [""];
         }
     };
+
 
     // Sort and limit products
     const sortedProducts = React.useMemo(() => {
@@ -118,14 +116,15 @@ const ProductGrid: React.FC = () => {
                         }`}>
                             <div className={viewType === 'list' ? 'w-1/4' : 'w-full'}>
                                 <img
-                                    src={parseImages(product.images)?.[0] ?? '/api/placeholder/300/300'}
+                                    src={parseImages(product.images)[0] ?? 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'}
                                     alt={product.title}
                                     className="rounded-lg w-full h-48 object-cover transition-transform group-hover:scale-105"
                                 />
+
                             </div>
                             <div className={viewType === 'list' ? 'flex-1' : 'mt-3'}>
                                 <Badge className="mb-2 bg-purple-100 text-purple-600 hover:bg-purple-100">
-                                {product.category.name}
+                                    {product.category.name}
                                 </Badge>
                                 <h3 className="font-semibold text-zinc-800">{product.title}</h3>
                                 <p className="text-purple-600 font-bold mt-1">${product.price}</p>
