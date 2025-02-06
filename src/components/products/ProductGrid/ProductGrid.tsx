@@ -117,7 +117,7 @@ const ProductGrid: React.FC = () => {
                         }`}>
                             <div className={viewType === 'list' ? 'w-1/4' : 'w-full'}>
                                 <img
-                                    src={parseImages(product.images)[0] ?? 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'}
+                                    src={parseImages(product.images)[0] || 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'}
                                     alt={product.title}
                                     className="rounded-lg w-full h-48 object-cover transition-transform group-hover:scale-105"
                                 />

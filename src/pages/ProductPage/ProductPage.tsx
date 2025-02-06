@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, selectProducts, selectProductLoading } from '../..//store/products/productSlice';
 import { fetchCategories, selectCategories } from '../../store/categories/categorySlice';
@@ -12,7 +12,7 @@ import {
     SelectValue,
 } from "../../components/ui/select";
 import { Slider } from "../../components/ui/slider";
-import { Grid, List, Loader2 } from 'lucide-react';
+import { Grid, List, Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import ProductCard from '../../components/products/ProductCard/ProductCard.tsx';
 import {Toaster} from "../../components/ui/toaster.tsx";
 import {AppDispatch} from "../../store";
@@ -28,10 +28,19 @@ const ProductsPage = () => {
     const [sortBy, setSortBy] = useState('featured');
     const [priceRange, setPriceRange] = useState([0, 1000]);
 
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(12);
+
     useEffect(() => {
         dispatch(fetchProducts());
         dispatch(fetchCategories());
     }, [dispatch]);
+
+    // Reset to first page when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedCategory, priceRange, sortBy]);
 
     const filteredProducts = products.filter(product => {
         const matchesCategory = selectedCategory === 'all' || product.category.id.toString() === selectedCategory;
@@ -51,6 +60,77 @@ const ProductsPage = () => {
                 return 0;
         }
     });
+
+    // Pagination calculations
+    const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+    const Pagination = () => (
+        <div className="mt-6 flex items-center justify-between px-2">
+            <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-700">
+                    Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, sortedProducts.length)} of{' '}
+                    {sortedProducts.length} products
+                </span>
+                <Select
+                    value={itemsPerPage.toString()}
+                    onValueChange={(value) => {
+                        setItemsPerPage(Number(value));
+                        setCurrentPage(1);
+                    }}
+                >
+                    <SelectTrigger className="w-[130px]">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="12">12 per page</SelectItem>
+                        <SelectItem value="24">24 per page</SelectItem>
+                        <SelectItem value="36">36 per page</SelectItem>
+                        <SelectItem value="48">48 per page</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <div className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage === 1}
+                >
+                    <ChevronsLeft className="h-4 w-4" />
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm mx-2">
+                    Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                >
+                    <ChevronRight className="h-4 w-4" />
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setCurrentPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                >
+                    <ChevronsRight className="h-4 w-4" />
+                </Button>
+            </div>
+        </div>
+    );
 
     if (loading) {
         return (
@@ -130,7 +210,7 @@ const ProductsPage = () => {
                         ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
                         : 'grid-cols-1'
                 } gap-6`}>
-                    {sortedProducts.map(product => (
+                    {currentProducts.map(product => (
                         <ProductCard
                             key={product.id}
                             product={product}
@@ -138,6 +218,8 @@ const ProductsPage = () => {
                         />
                     ))}
                 </div>
+
+                <Pagination />
             </div>
         </div>
     );

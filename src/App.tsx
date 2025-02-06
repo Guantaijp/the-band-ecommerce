@@ -14,6 +14,8 @@ import Products from './pages/ProductPage/ProductPage.tsx';
 
 import CartPage from './pages/Cart/CartPage';
 import CategoryPage from './components/layout/category/CategoryPage.tsx';
+import Dashboard from "./pages/AdminDashboard/Dashboard.tsx";
+import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
 
 // import LoginPage from './pages/Auth/LoginPage';
 // import Dashboard from './pages/AdminDashboard/Dashboard';
@@ -37,23 +39,21 @@ const App = () => {
                                 <Route path="/cart" element={<CartPage />} />
                                 <Route path="/categories" element={<CategoryPage />} />
                                 {/*<Route path="/login" element={<LoginPage />} />*/}
+                                <Route
+                                    path="/admin/*"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Routes>
+                                                <Route path="dashboard" element={<Dashboard />} />
+                                                <Route path="products" element={<Dashboard />} />
+                                                <Route path="analytics" element={<Dashboard />} />
+                                                <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
+                                            </Routes>
+                                        </ProtectedRoute>
+                                    }
+                                />
 
-                                {/* Protected Admin Routes */}
-                                {/*<Route*/}
-                                {/*    path="/admin/*"*/}
-                                {/*    element={*/}
-                                {/*        <ProtectedRoute>*/}
-                                {/*            <Routes>*/}
-                                {/*                <Route path="dashboard" element={<Dashboard />} />*/}
-                                {/*                <Route path="products" element={<Dashboard />} />*/}
-                                {/*                <Route path="analytics" element={<Dashboard />} />*/}
-                                {/*                <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />*/}
-                                {/*            </Routes>*/}
-                                {/*        </ProtectedRoute>*/}
-                                {/*    }*/}
-                                {/*/>*/}
 
-                                {/* 404 Route */}
                                 <Route path="*" element={<Navigate to="/" replace />} />
                             </Routes>
                         </main>
