@@ -5,7 +5,7 @@ import { Button } from "../../../components/ui/button";
 import { Badge } from "../../../components/ui/badge";
 
 const CartIcon = () => {
-    const [count, setCount] = React.useState(3);
+    const [count, ] = React.useState(3);
 
     return (
         <Button variant="ghost" className="relative">

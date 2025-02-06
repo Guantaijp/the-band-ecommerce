@@ -1,7 +1,7 @@
 // src/store/categories/categorySlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Category, CategoryState } from './categoryTypes';
+import {  CategoryState } from './categoryTypes';
 
 const CATEGORIES_URL = 'https://api.escuelajs.co/api/v1/categories';
 
@@ -11,7 +11,7 @@ export const fetchCategories = createAsyncThunk(
         try {
             const response = await axios.get(CATEGORIES_URL);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -23,7 +23,7 @@ export const fetchProductsByCategory = createAsyncThunk(
         try {
             const response = await axios.get(`${CATEGORIES_URL}/${categoryId}/products`);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -35,7 +35,7 @@ export const createCategory = createAsyncThunk(
         try {
             const response = await axios.post(CATEGORIES_URL, categoryData);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }

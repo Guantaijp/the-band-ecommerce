@@ -9,6 +9,7 @@ export interface Product {
         image: string;
     };
     images: string[];
+    creationAt: string;
 }
 
 export interface ProductState {

@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
         try {
             const response = await axios.get(BASE_URL);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -23,7 +23,7 @@ export const fetchSingleProduct = createAsyncThunk(
         try {
             const response = await axios.get(`${BASE_URL}/${id}`);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -35,7 +35,7 @@ export const createProduct = createAsyncThunk(
         try {
             const response = await axios.post(BASE_URL, productData);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -47,7 +47,7 @@ export const updateProduct = createAsyncThunk(
         try {
             const response = await axios.put(`${BASE_URL}/${id}`, productData);
             return response.data;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -59,7 +59,7 @@ export const deleteProduct = createAsyncThunk(
         try {
             await axios.delete(`${BASE_URL}/${id}`);
             return id;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }

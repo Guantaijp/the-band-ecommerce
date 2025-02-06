@@ -1,7 +1,7 @@
 // src/store/auth/authSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { User, AuthState } from './authTypes';
+import {  AuthState } from './authTypes';
 
 const AUTH_URL = 'https://api.escuelajs.co/api/v1/auth';
 
@@ -20,7 +20,7 @@ export const login = createAsyncThunk(
                 token: access_token,
                 user: profileResponse.data
             };
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }
@@ -35,7 +35,7 @@ export const refreshToken = createAsyncThunk(
                 token: state.auth.token
             });
             return response.data.access_token;
-        } catch (error) {
+        } catch (error:any) {
             return rejectWithValue(error.response.data);
         }
     }

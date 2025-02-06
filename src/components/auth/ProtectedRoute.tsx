@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 // import { useAuth } from '../../hooks/useAuth';
 
 interface ProtectedRouteProps {
@@ -6,6 +6,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+    console.log(children);
     // const { isAuthenticated, isLoading } = useAuth();
 
     // if (isLoading) {

@@ -12,7 +12,7 @@ import {
 import { Badge } from "../../../components/ui/badge";
 import { Grid, List } from 'lucide-react';
 import { fetchProducts, selectProducts, selectProductLoading } from '../../../store/products/productSlice';
-import { AppDispatch, RootState } from '../../../store/index.ts';
+import { AppDispatch,  } from '../../../store/index.ts';
 
 const ProductGrid: React.FC = () => {
     const [viewType, setViewType] = React.useState<'grid' | 'list'>('grid');
@@ -27,10 +27,15 @@ const ProductGrid: React.FC = () => {
     }, [dispatch]);
 
     // Parse images from stringified JSON
-    const parseImages = (imagesStr: string) => {
+    const parseImages = (imagesStr: string | string[] | null | undefined): string[] => {
+        if (!imagesStr) return [];
+
+        if (Array.isArray(imagesStr)) {
+            return imagesStr; // Already an array, return as is
+        }
+
         try {
-            const parsed = JSON.parse(imagesStr);
-            return parsed.map((img: string) => img.replace(/^"|"$/g, ''));
+            return (JSON.parse(imagesStr) as string[]).map((img) => img.replace(/^"|"$/g, ''));
         } catch {
             return [];
         }
@@ -113,14 +118,14 @@ const ProductGrid: React.FC = () => {
                         }`}>
                             <div className={viewType === 'list' ? 'w-1/4' : 'w-full'}>
                                 <img
-                                    src={parseImages(product.images)[0] || '/api/placeholder/300/300'}
+                                    src={parseImages(product.images)?.[0] ?? '/api/placeholder/300/300'}
                                     alt={product.title}
                                     className="rounded-lg w-full h-48 object-cover transition-transform group-hover:scale-105"
                                 />
                             </div>
                             <div className={viewType === 'list' ? 'flex-1' : 'mt-3'}>
                                 <Badge className="mb-2 bg-purple-100 text-purple-600 hover:bg-purple-100">
-                                    {product.category.name}
+                                {product.category.name}
                                 </Badge>
                                 <h3 className="font-semibold text-zinc-800">{product.title}</h3>
                                 <p className="text-purple-600 font-bold mt-1">${product.price}</p>

@@ -22,10 +22,19 @@ const FeaturedProducts: React.FC = () => {
 
         return shuffled.slice(0, 2).map(product => {
             // Parse images safely
-            const images = product.images ?
-                JSON.parse(product.images).map((img: string) => img.replace(/^"|"$/g, ''))
-                : [];
+            const parseImages = (imagesStr: string | string[]): string[] => {
+                if (Array.isArray(imagesStr)) {
+                    return imagesStr; // Already an array, return as is
+                }
 
+                try {
+                    return (JSON.parse(imagesStr) as string[]).map((img) => img.replace(/^"|"$/g, ''));
+                } catch {
+                    return [];
+                }
+            };
+
+            const images = parseImages(product.images);
             return {
                 id: product.id,
                 name: product.title,

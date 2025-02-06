@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 // import { store } from './store/store';
 
 // Layout Components
@@ -15,7 +15,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 // import Dashboard from './pages/AdminDashboard/Dashboard';
 
 // Protected Route Component
-import ProtectedRoute from './components/auth/ProtectedRoute';
+// import ProtectedRoute from './components/auth/ProtectedRoute';
 
 const App = () => {
     return (
@@ -34,19 +34,19 @@ const App = () => {
                                 {/*<Route path="/login" element={<LoginPage />} />*/}
 
                                 {/* Protected Admin Routes */}
-                                <Route
-                                    path="/admin/*"
-                                    element={
-                                        <ProtectedRoute>
-                                            {/*<Routes>*/}
-                                            {/*    <Route path="dashboard" element={<Dashboard />} />*/}
-                                            {/*    <Route path="products" element={<Dashboard />} />*/}
-                                            {/*    <Route path="analytics" element={<Dashboard />} />*/}
-                                            {/*    <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />*/}
-                                            {/*</Routes>*/}
-                                        </ProtectedRoute>
-                                    }
-                                />
+                                {/*<Route*/}
+                                {/*    path="/admin/*"*/}
+                                {/*    element={*/}
+                                {/*        <ProtectedRoute>*/}
+                                {/*            <Routes>*/}
+                                {/*                <Route path="dashboard" element={<Dashboard />} />*/}
+                                {/*                <Route path="products" element={<Dashboard />} />*/}
+                                {/*                <Route path="analytics" element={<Dashboard />} />*/}
+                                {/*                <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />*/}
+                                {/*            </Routes>*/}
+                                {/*        </ProtectedRoute>*/}
+                                {/*    }*/}
+                                {/*/>*/}
 
                                 {/* 404 Route */}
                                 <Route path="*" element={<Navigate to="/" replace />} />

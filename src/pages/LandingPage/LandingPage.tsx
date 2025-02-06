@@ -3,7 +3,6 @@ import Navbar from '../../components/layout/Navbar/Navbar';
 import PromotionalBanner from '../../components/layout/Banner/PromotionalBanner';
 import ProductGrid from '../../components/products/ProductGrid/ProductGrid';
 import TestimonialCard from '../../components/testimonials/TestimonialCard';
-import Footer from '../../components/layout/Footer/Footer';
 
 const LandingPage: React.FC = () => {
     return (
