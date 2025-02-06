@@ -9,8 +9,12 @@ import Footer from './components/layout/Footer/Footer';
 
 // Pages
 import LandingPage from './pages/LandingPage/LandingPage';
-// import ProductPage from './pages/ProductPage/ProductPage';
-// import CartPage from './pages/Cart/CartPage';
+import ProductPage from './components/products/ProductDetail/ProductDetail.tsx';
+import Products from './pages/ProductPage/ProductPage.tsx';
+
+import CartPage from './pages/Cart/CartPage';
+import CategoryPage from './components/layout/category/CategoryPage.tsx';
+
 // import LoginPage from './pages/Auth/LoginPage';
 // import Dashboard from './pages/AdminDashboard/Dashboard';
 
@@ -28,9 +32,10 @@ const App = () => {
                             <Routes>
                                 {/* Public Routes */}
                                 <Route path="/" element={<LandingPage />} />
-                                {/*<Route path="/products" element={<ProductPage />} />*/}
-                                {/*<Route path="/products/:id" element={<ProductPage />} />*/}
-                                {/*<Route path="/cart" element={<CartPage />} />*/}
+                                <Route path="/products" element={<Products />} />
+                                <Route path="/products/:id" element={<ProductPage />} />
+                                <Route path="/cart" element={<CartPage />} />
+                                <Route path="/categories" element={<CategoryPage />} />
                                 {/*<Route path="/login" element={<LoginPage />} />*/}
 
                                 {/* Protected Admin Routes */}

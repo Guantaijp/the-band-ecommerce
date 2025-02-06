@@ -13,11 +13,12 @@ import { Badge } from "../../../components/ui/badge";
 import { Grid, List } from 'lucide-react';
 import { fetchProducts, selectProducts, selectProductLoading } from '../../../store/products/productSlice';
 import { AppDispatch,  } from '../../../store/index.ts';
+import {useNavigate} from "react-router-dom";
 
 const ProductGrid: React.FC = () => {
     const [viewType, setViewType] = React.useState<'grid' | 'list'>('grid');
     const [sortBy, setSortBy] = React.useState('featured');
-
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const products = useSelector(selectProducts);
     const loading = useSelector(selectProductLoading);
@@ -133,6 +134,14 @@ const ProductGrid: React.FC = () => {
                                         {product.description}
                                     </p>
                                 )}
+                                <Button
+                                    variant="outline"
+                                    className="mt-3 w-full"
+                                    onClick={() => navigate(`/products/${product.id}`)}
+                                >
+                                    View Details
+                                </Button>
+
                             </div>
                         </CardContent>
                     </Card>
