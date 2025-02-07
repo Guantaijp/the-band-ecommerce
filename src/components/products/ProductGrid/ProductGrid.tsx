@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from "../../../components/ui/card";
 import { Button } from "../../../components/ui/button";
+import { Skeleton } from "../../../components/ui/skeleton";
 import {
     Select,
     SelectContent,
@@ -14,6 +15,22 @@ import { Grid, List } from 'lucide-react';
 import { fetchProducts, selectProducts, selectProductLoading } from '../../../store/products/productSlice';
 import { AppDispatch,  } from '../../../store/index.ts';
 import {useNavigate} from "react-router-dom";
+
+const ProductSkeleton = () => (
+    <Card className="overflow-hidden">
+        <div className="relative">
+            <Skeleton className="w-full h-48" />
+            <div className="p-4 space-y-3">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+                <div className="flex justify-between items-center pt-2">
+                    <Skeleton className="h-6 w-20" />
+                    <Skeleton className="h-9 w-24" />
+                </div>
+            </div>
+        </div>
+    </Card>
+);
 
 const ProductGrid: React.FC = () => {
     const [viewType, setViewType] = React.useState<'grid' | 'list'>('grid');
@@ -62,7 +79,35 @@ const ProductGrid: React.FC = () => {
     }, [products, sortBy]);
 
     if (loading) {
-        return <div>Loading products...</div>;
+        return (
+            <div className="container mx-auto py-12 mt-8">
+                <div className="flex flex-col space-y-8">
+                    <Card>
+                        <CardContent className="p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <Skeleton className="h-10" />
+                                <Skeleton className="h-10" />
+                                <div className="col-span-2">
+                                    <Skeleton className="h-4 w-32 mb-2" />
+                                    <Skeleton className="h-10" />
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <div className="flex justify-end space-x-2">
+                        <Skeleton className="h-10 w-10" />
+                        <Skeleton className="h-10 w-10" />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[1, 2, 3, 4].map((index) => (
+                            <ProductSkeleton key={index} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (

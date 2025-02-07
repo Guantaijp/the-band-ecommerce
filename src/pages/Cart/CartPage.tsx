@@ -32,7 +32,7 @@ const CartPage: React.FC = () => {
                     <ShoppingBag className="w-16 h-16 text-zinc-300" />
                     <h2 className="text-2xl font-semibold">Your cart is empty</h2>
                     <p className="text-zinc-600">Start shopping to add items to your cart</p>
-                    <Button onClick={() => navigate('/')}>
+                    <Button className='bg-purple-600' onClick={() => navigate('/')}>
                         <ArrowLeft className="mr-2 h-4 w-4" /> Continue Shopping
                     </Button>
                 </div>
@@ -110,7 +110,7 @@ const CartPage: React.FC = () => {
                                 <span>${total.toFixed(2)}</span>
                             </div>
                         </div>
-                        <Button className="w-full">
+                        <Button className="w-full bg-purple-600">
                             Proceed to Checkout
                         </Button>
                     </CardContent>

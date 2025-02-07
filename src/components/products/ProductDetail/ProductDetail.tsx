@@ -49,9 +49,9 @@ const ProductDetail: React.FC = () => {
             description: `${quantity} x ${product.title} added to your cart`,
             duration: 2000,
             style: {
-                border: "2px solid green", // ✅ Adds green border
-                backgroundColor: "#f0fff4", // Light green background
-                color: "#2f855a", // Dark green text
+                border: "2px solid green",
+                backgroundColor: "#f0fff4",
+                color: "#2f855a",
             }
         });
 

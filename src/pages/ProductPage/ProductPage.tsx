@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, selectProducts, selectProductLoading } from '../..//store/products/productSlice';
 import { fetchCategories, selectCategories } from '../../store/categories/categorySlice';
@@ -12,11 +12,28 @@ import {
     SelectValue,
 } from "../../components/ui/select";
 import { Slider } from "../../components/ui/slider";
-import { Grid, List, Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { Grid, List, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import ProductCard from '../../components/products/ProductCard/ProductCard.tsx';
 import {Toaster} from "../../components/ui/toaster.tsx";
 import {AppDispatch} from "../../store";
+import {Skeleton} from "../../components/ui/skeleton.tsx";
 
+
+const ProductSkeleton = () => (
+    <Card className="overflow-hidden">
+        <div className="relative">
+            <Skeleton className="w-full h-48" />
+            <div className="p-4 space-y-3">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+                <div className="flex justify-between items-center pt-2">
+                    <Skeleton className="h-6 w-20" />
+                    <Skeleton className="h-9 w-24" />
+                </div>
+            </div>
+        </div>
+    </Card>
+);
 const ProductsPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const products = useSelector(selectProducts);
@@ -134,22 +151,46 @@ const ProductsPage = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <Loader2 className="w-8 h-8 animate-spin" />
+            <div className="container mx-auto py-12 mt-8">
+                <div className="flex flex-col space-y-8">
+                    <Card>
+                        <CardContent className="p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <Skeleton className="h-10"/>
+                                <Skeleton className="h-10"/>
+                                <div className="col-span-2">
+                                    <Skeleton className="h-4 w-32 mb-2"/>
+                                    <Skeleton className="h-10"/>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <div className="flex justify-end space-x-2">
+                        <Skeleton className="h-10 w-10"/>
+                        <Skeleton className="h-10 w-10"/>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[1, 2, 3, 4].map((index) => (
+                            <ProductSkeleton key={index}/>
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="container mx-auto py-12 mt-8">
-            <Toaster />
+            <Toaster/>
             <div className="flex flex-col space-y-8">
                 <Card>
                     <CardContent className="p-6">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Category" />
+                                    <SelectValue placeholder="Category"/>
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="all">All Categories</SelectItem>
