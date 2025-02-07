@@ -16,6 +16,7 @@ import CartPage from './pages/Cart/CartPage';
 import CategoryPage from './components/layout/category/CategoryPage.tsx';
 import Dashboard from "./pages/AdminDashboard/Dashboard.tsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
+import LoginPage from "./pages/Auth/LoginPage.tsx";
 
 // import LoginPage from './pages/Auth/LoginPage';
 // import Dashboard from './pages/AdminDashboard/Dashboard';
@@ -38,7 +39,7 @@ const App = () => {
                                 <Route path="/products/:id" element={<ProductPage />} />
                                 <Route path="/cart" element={<CartPage />} />
                                 <Route path="/categories" element={<CategoryPage />} />
-                                {/*<Route path="/login" element={<LoginPage />} />*/}
+                                <Route path="/login" element={<LoginPage />} />
                                 <Route
                                     path="/admin/*"
                                     element={
